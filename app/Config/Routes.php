@@ -13,3 +13,4 @@ $routes->get('login', 'AuthController::login');
 $routes->post('validar-login', 'AuthController::validarLogin');
 
 $routes->get('logout', 'AuthController::logout');
+$routes->get('usuarios', 'UsuariosController::index');
