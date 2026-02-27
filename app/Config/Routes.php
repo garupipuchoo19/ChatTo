@@ -14,3 +14,5 @@ $routes->post('validar-login', 'AuthController::validarLogin');
 
 $routes->get('logout', 'AuthController::logout');
 $routes->get('usuarios', 'UsuariosController::index');
+$routes->get('chat/(:num)', 'ChatController::chat/$1');
+$routes->post('enviar', 'ChatController::enviar');
