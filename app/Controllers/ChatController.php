@@ -13,6 +13,7 @@ class ChatController extends BaseController
         }
 
         $db = \Config\Database::connect();
+        $encrypter = \Config\Services::encrypter();
 
         $miId = session()->get('usuario_id');
 
@@ -50,22 +51,41 @@ class ChatController extends BaseController
             ->get()
             ->getResultArray();
 
+        // 🔐 DESCIFRAR MENSAJES (ANTES DEL RETURN)
+        foreach ($mensajes as &$m) {
+            if (!empty($m['mensaje_cifrado'])) {
+                try {
+                    $m['mensaje'] = $encrypter->decrypt(
+                        base64_decode($m['mensaje_cifrado'])
+                    );
+                } catch (\Exception $e) {
+                    $m['mensaje'] = '[No se pudo descifrar]';
+                }
+            }
+        }
+
         return view('chat/chat', [
             'conversacion_id' => $conversacionId,
             'mensajes' => $mensajes,
             'destino_id' => $usuarioDestinoId
         ]);
     }
+
     public function enviar()
     {
         $db = \Config\Database::connect();
+        $encrypter = \Config\Services::encrypter();
 
-        $mensaje = $this->request->getPost('mensaje');
+        $mensajePlano = $this->request->getPost('mensaje');
+
+        $mensajeCifrado = base64_encode(
+            $encrypter->encrypt($mensajePlano)
+        );
 
         $db->table('mensajes')->insert([
             'conversacion_id' => $this->request->getPost('conversacion_id'),
             'remitente_id' => session()->get('usuario_id'),
-            'mensaje' => $mensaje,
+            'mensaje_cifrado' => $mensajeCifrado,
             'created_at' => date('Y-m-d H:i:s')
         ]);
 
