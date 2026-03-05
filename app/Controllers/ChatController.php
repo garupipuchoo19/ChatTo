@@ -44,7 +44,7 @@ class ChatController extends BaseController
             $conversacionId = $conversacion['id'];
         }
 
-        // Obtener mensajes
+
         $mensajes = $db->table('mensajes')
             ->where('conversacion_id', $conversacionId)
             ->orderBy('id', 'ASC')
