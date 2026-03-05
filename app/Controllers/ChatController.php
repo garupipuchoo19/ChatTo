@@ -119,5 +119,29 @@ public function enviar()
 
     return redirect()->to('/chat/'.$this->request->getPost('destino_id'));
 }
+public function obtenerMensajes($conversacionId)
+{
+    $db = \Config\Database::connect();
+    $encrypter = \Config\Services::encrypter();
+
+    $mensajes = $db->table('mensajes')
+        ->where('conversacion_id', $conversacionId)
+        ->orderBy('id', 'ASC')
+        ->get()
+        ->getResultArray();
+
+    foreach ($mensajes as &$m) {
+        if (!empty($m['mensaje_cifrado'])) {
+            try {
+                $m['mensaje'] = $encrypter->decrypt(base64_decode($m['mensaje_cifrado']));
+            } catch (\Exception $e) {
+                $m['mensaje'] = '[Error]';
+            }
+        }
+    }
+
+    return $this->response->setJSON($mensajes);
+}
+
 
 }
