@@ -31,7 +31,7 @@ class ChatController extends BaseController
             ->get()
             ->getRowArray();
 
-        // Si no existe, crearla
+        
         if (!$conversacion) {
             $builder->insert([
                 'usuario1_id' => $miId,
