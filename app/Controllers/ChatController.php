@@ -51,7 +51,7 @@ class ChatController extends BaseController
             ->get()
             ->getResultArray();
 
-        // 🔐 DESCIFRAR MENSAJES (ANTES DEL RETURN)
+        
         foreach ($mensajes as &$m) {
             if (!empty($m['mensaje_cifrado'])) {
                 try {
