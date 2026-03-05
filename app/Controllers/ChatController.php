@@ -17,7 +17,7 @@ class ChatController extends BaseController
 
         $miId = session()->get('usuario_id');
 
-        // Buscar conversación existente
+        
         $builder = $db->table('conversaciones');
         $conversacion = $builder
             ->groupStart()
