@@ -76,49 +76,48 @@ public function enviar()
     $db = \Config\Database::connect();
     $encrypter = \Config\Services::encrypter();
 
-    $mensajePlano = $this->request->getPost('mensaje');
+    $mensaje = $this->request->getPost('mensaje');
     $archivo = $this->request->getFile('archivo');
 
     $tipo = 'texto';
     $nombreArchivo = null;
-    $mensajeCifrado = null;
 
-    // Si hay mensaje de texto
-    if(!empty($mensajePlano)){
-        $mensajeCifrado = base64_encode(
-            $encrypter->encrypt($mensajePlano)
-        );
-        $tipo = 'texto';
-    }
-
-    // Si se sube archivo
     if ($archivo && $archivo->isValid() && !$archivo->hasMoved()) {
 
         $extension = $archivo->getExtension();
+
         $nombreArchivo = $archivo->getRandomName();
+        $archivo->move('uploads', $nombreArchivo);
 
-        $archivo->move(ROOTPATH.'public/uploads', $nombreArchivo);
-
-        if(in_array($extension, ['jpg','jpeg','png','gif'])){
+        if (in_array($extension,['jpg','jpeg','png','gif'])) {
             $tipo = 'imagen';
         }
 
-        if(in_array($extension, ['mp4','webm','mov'])){
+        if (in_array($extension,['mp4','mov','webm'])) {
             $tipo = 'video';
         }
     }
 
+    $mensajeCifrado = null;
+
+    if($mensaje){
+        $mensajeCifrado = base64_encode($encrypter->encrypt($mensaje));
+    }
+
     $db->table('mensajes')->insert([
+
         'conversacion_id' => $this->request->getPost('conversacion_id'),
         'remitente_id' => session()->get('usuario_id'),
         'mensaje_cifrado' => $mensajeCifrado,
         'archivo' => $nombreArchivo,
         'tipo' => $tipo,
         'created_at' => date('Y-m-d H:i:s')
+
     ]);
 
     return redirect()->to('/chat/'.$this->request->getPost('destino_id'));
 }
+
 public function obtenerMensajes($conversacionId)
 {
     $db = \Config\Database::connect();
