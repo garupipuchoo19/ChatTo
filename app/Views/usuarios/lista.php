@@ -6,6 +6,10 @@
 
 <hr>
 
+<a href="/ia">
+<button>IA</button>
+</a>
+
 <?php if(empty($usuarios)): ?>
     <p>No hay usuarios aún</p>
 <?php else: ?>

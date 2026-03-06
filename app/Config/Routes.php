@@ -24,6 +24,8 @@ $routes->post('/forgot', 'AuthController::sendReset');
 $routes->get('/reset/(:any)', 'AuthController::resetForm/$1');
 $routes->post('/reset', 'AuthController::resetPassword');
 
+$routes->get('/ia', 'IAController::index');
+$routes->post('/ia/chat', 'IAController::chat');
 
 $routes->get('/mensajes/(:num)', 'ChatController::obtenerMensajes/$1');
 
