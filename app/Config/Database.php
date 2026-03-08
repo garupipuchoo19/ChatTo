@@ -4,9 +4,7 @@ namespace Config;
 
 use CodeIgniter\Database\Config;
 
-/**
- * Database Configuration
- */
+
 class Database extends Config
 {
     /**
