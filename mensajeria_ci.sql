@@ -1,5 +1,3 @@
-CREATE DATABASE mensajeria_ci;
-USE mensajeria_ci;
 
 CREATE TABLE usuarios (
     id INT AUTO_INCREMENT PRIMARY KEY,
