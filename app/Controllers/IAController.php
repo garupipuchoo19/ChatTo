@@ -14,33 +14,53 @@ class IAController extends BaseController
     {
         $mensaje = $this->request->getPost('mensaje');
 
-        $apiKey = getenv('OPENAI_API_KEY');
+        if (!$mensaje) {
+            return $this->response->setJSON([
+                "respuesta" => "Mensaje vacío"
+            ]);
+        }
 
-        $client = \Config\Services::curlrequest();
+        $apiKey = env('GEMINI_API_KEY');
 
-        $response = $client->post(
-            'https://api.openai.com/v1/chat/completions',
-            [
-                'headers' => [
-                    'Authorization' => 'Bearer ' . $apiKey,
-                    'Content-Type' => 'application/json'
-                ],
-                'json' => [
-                    'model' => 'gpt-4.1-mini',
-                    'messages' => [
+        $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=" . $apiKey;
+
+        $data = [
+            "contents" => [
+                [
+                    "parts" => [
                         [
-                            'role' => 'user',
-                            'content' => $mensaje
+                            "text" => $mensaje
                         ]
                     ]
                 ]
             ]
-        );
+        ];
 
-        $data = json_decode($response->getBody(), true);
+        $ch = curl_init($url);
+
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            "Content-Type: application/json"
+        ]);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+
+        $response = curl_exec($ch);
+
+        curl_close($ch);
+
+        $resultado = json_decode($response, true);
+
+        $respuesta = "No hubo respuesta";
+
+        if (isset($resultado['candidates'][0]['content']['parts'][0]['text'])) {
+            $respuesta = $resultado['candidates'][0]['content']['parts'][0]['text'];
+        } elseif (isset($resultado['error']['message'])) {
+            $respuesta = $resultado['error']['message'];
+        }
 
         return $this->response->setJSON([
-            'respuesta' => $data['choices'][0]['message']['content']
+            "respuesta" => $respuesta
         ]);
     }
 }

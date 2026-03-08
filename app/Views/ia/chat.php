@@ -10,11 +10,14 @@
 <div id="chat" style="border:1px solid #ccc;height:300px;overflow:auto;padding:10px"></div>
 
 <input type="text" id="mensaje" placeholder="Escribe algo...">
-<button onclick="enviar()">Enviar</button>
+<button id="btnEnviar" onclick="enviar()">Enviar</button>
 
 <script>
 
 function enviar(){
+
+    let boton = document.getElementById("btnEnviar");
+    boton.disabled = true; // 🔒 bloquea el botón
 
     let mensaje = document.getElementById("mensaje").value;
 
@@ -36,6 +39,8 @@ function enviar(){
         document.getElementById("mensaje").value="";
 
         chat.scrollTop = chat.scrollHeight;
+
+        boton.disabled = false; // 🔓 vuelve a activar el botón
 
     });
 
