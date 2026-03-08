@@ -1,20 +1,50 @@
-<h2>Usuarios disponibles</h2>
+<?= view('layout/header') ?>
 
-<p>Hola <?= session()->get('usuario_nombre') ?></p>
+<h3 class="mb-3">Usuarios disponibles</h3>
 
-<a href="/logout">Cerrar sesión</a>
+<p class="mb-3">
+Hola <strong><?= session()->get('usuario_nombre') ?></strong>
+</p>
+
+<a href="/logout" class="btn btn-danger mb-3">
+Cerrar sesión
+</a>
 
 <hr>
 
 <?php if(empty($usuarios)): ?>
-    <p>No hay usuarios aún</p>
+
+<div class="alert alert-warning">
+No hay usuarios aún
+</div>
+
 <?php else: ?>
-    <ul>
-        <?php foreach($usuarios as $u): ?>
-            <li>
-                <?= esc($u['nombre']) ?>
-                <a href="/chat/<?= $u['id'] ?>">Chatear</a>
-            </li>
-        <?php endforeach; ?>
-    </ul>
+
+<div class="card">
+
+<div class="card-body">
+
+<ul class="list-group">
+
+<?php foreach($usuarios as $u): ?>
+
+<li class="list-group-item d-flex justify-content-between align-items-center">
+
+<?= esc($u['nombre']) ?>
+
+<a href="/chat/<?= $u['id'] ?>" class="btn btn-primary btn-sm">
+Chatear
+</a>
+
+</li>
+
+<?php endforeach; ?>
+
+</ul>
+
+</div>
+</div>
+
 <?php endif; ?>
+
+<?= view('layout/footer') ?>
