@@ -1,0 +1,9 @@
+# Ignorar archivos temporales
+writable/debugbar/
+writable/session/
+writable/logs/*.log
+writable/logs/index.html
+
+# Ignorar archivos del sistema
+.DS_Store
+Thumbs.db
