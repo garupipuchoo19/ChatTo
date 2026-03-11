@@ -7,3 +7,6 @@ writable/logs/index.html
 # Ignorar archivos del sistema
 .DS_Store
 Thumbs.db
+writable/debugbar/
+writable/session/
+writable/logs/*.log
