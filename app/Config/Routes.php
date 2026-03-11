@@ -29,3 +29,6 @@ $routes->post('/ia/chat', 'IAController::chat');
 
 $routes->get('/mensajes/(:num)', 'ChatController::obtenerMensajes/$1');
 
+$routes->get('/grupos', 'GrupoController::index');
+$routes->get('/grupo/(:num)', 'GrupoController::chat/$1');
+$routes->post('/grupo/enviar', 'GrupoController::enviar');
