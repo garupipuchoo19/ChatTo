@@ -1,20 +1,26 @@
 <?= view('layout/header') ?>
 
-<h3 class="mb-3">Usuarios disponibles</h3>
+<h2 class="mb-4">Usuarios disponibles</h2>
 
-<p class="mb-3">
-Hola <strong><?= session()->get('usuario_nombre') ?></strong>
-</p>
+<p>Hola <strong><?= session()->get('usuario_nombre') ?></strong></p>
 
-<a href="/logout" class="btn btn-danger mb-3">
+<div class="mb-4">
+
+<a href="/logout" class="btn btn-danger me-2">
 Cerrar sesión
 </a>
 
-<hr>
-
-<a href="/ia">
-<button>IA</button>
+<a href="/ia" class="btn btn-warning me-2">
+🤖 IA
 </a>
+
+<a href="/grupos" class="btn btn-success">
+👥 Grupos
+</a>
+
+</div>
+
+<hr>
 
 <?php if(empty($usuarios)): ?>
 
@@ -24,8 +30,7 @@ No hay usuarios aún
 
 <?php else: ?>
 
-<div class="card">
-
+<div class="card shadow">
 <div class="card-body">
 
 <ul class="list-group">

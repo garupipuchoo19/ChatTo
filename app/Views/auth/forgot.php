@@ -1,60 +1,57 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Recuperar contraseña</title>
-<style>
+<?= view('layout/header') ?>
 
-body{
-font-family:Arial;
-background:#f4f6f9;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-}
+<div class="row justify-content-center">
 
-.card{
-background:white;
-padding:30px;
-width:300px;
-border-radius:10px;
-box-shadow:0 0 10px rgba(0,0,0,0.1);
-}
+<div class="col-md-4">
 
-input{
-width:100%;
-padding:10px;
-margin:10px 0;
-border:1px solid #ccc;
-border-radius:5px;
-}
+<div class="card shadow">
 
-button{
-width:100%;
-padding:10px;
-background:#ff9800;
-color:white;
-border:none;
-border-radius:5px;
-}
+<div class="card-body">
 
-</style>
-</head>
-<body>
+<h3 class="text-center mb-4">Recuperar contraseña</h3>
 
-<div class="card">
+<form method="post" action="/forgot">
+    <input type="email" name="email" placeholder="Tu email" required>
+    <button type="submit">Recuperar contraseña</button>
+</form><?= view('layout/header') ?>
 
-<h2>Recuperar contraseña</h2>
+<div class="row justify-content-center">
+
+<div class="col-md-4">
+
+<div class="card shadow">
+
+<div class="card-body">
+
+<h3 class="text-center mb-4">Recuperar contraseña</h3>
 
 <form method="post" action="/forgot">
 
-<input type="email" name="email" placeholder="Tu email" required>
+<div class="mb-3">
+<input 
+type="email" 
+name="email" 
+class="form-control"
+placeholder="Tu correo"
+required>
+</div>
 
-<button type="submit">Recuperar contraseña</button>
+<button class="btn btn-warning w-100">
+Enviar enlace
+</button>
 
 </form>
 
+<hr>
+
+<a href="/login" class="btn btn-secondary w-100">
+Volver al login
+</a>
+
+</div>
 </div>
 
-</body>
-</html>
+</div>
+</div>
+
+<?= view('layout/footer') ?>

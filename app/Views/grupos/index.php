@@ -1,8 +1,18 @@
 <?= view('layout/header') ?>
 
-<div class="container mt-4">
+<h2>Grupos</h2>
 
-<h3>Grupos</h3>
+<a href="/grupos/crear" class="btn btn-success mb-3">
+Crear grupo
+</a>
+
+<?php if(empty($grupos)): ?>
+
+<div class="alert alert-warning">
+No hay grupos aún
+</div>
+
+<?php else: ?>
 
 <ul class="list-group">
 
@@ -12,7 +22,7 @@
 
 <?= esc($g['nombre']) ?>
 
-<a href="/grupo/<?= $g['id'] ?>" class="btn btn-primary btn-sm">
+<a href="/grupo_chat/<?= $g['id'] ?>" class="btn btn-primary btn-sm">
 Entrar
 </a>
 
@@ -22,6 +32,6 @@ Entrar
 
 </ul>
 
-</div>
+<?php endif; ?>
 
 <?= view('layout/footer') ?>
