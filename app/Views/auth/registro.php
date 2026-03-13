@@ -1,80 +1,84 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <title>Registro</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <style>
 
 body{
-    font-family: Arial;
-    background:#f4f6f9;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
+background:#f5f5f5;
+font-family:Segoe UI;
 }
 
 .card{
-    background:white;
-    padding:30px;
-    width:300px;
-    border-radius:10px;
-    box-shadow:0 0 10px rgba(0,0,0,0.1);
+border-radius:12px;
+border:none;
 }
 
-h2{
-    text-align:center;
+.btn-main{
+background:#ff8c42;
+color:white;
+border:none;
 }
 
-input{
-    width:100%;
-    padding:10px;
-    margin:8px 0;
-    border:1px solid #ccc;
-    border-radius:5px;
-}
-
-button{
-    width:100%;
-    padding:10px;
-    background:#2196F3;
-    color:white;
-    border:none;
-    border-radius:5px;
-}
-
-button:hover{
-    background:#1976D2;
-}
-
-a{
-    display:block;
-    text-align:center;
-    margin-top:10px;
+.btn-main:hover{
+background:#e6762f;
 }
 
 </style>
 
 </head>
+
 <body>
 
-<div class="card">
+<div class="container vh-100 d-flex align-items-center justify-content-center">
 
-<h2>Registro</h2>
+<div class="card shadow-lg p-4" style="width:420px">
+
+<h3 class="text-center mb-4">Crear cuenta</h3>
 
 <form method="post" action="/guardar-registro">
 
-<input type="text" name="nombre" placeholder="Nombre" required>
+<div class="mb-3">
 
-<input type="email" name="email" placeholder="Email" required>
+<label>Nombre</label>
 
-<input type="password" name="password" placeholder="Password" required>
+<input type="text" name="nombre" class="form-control" required>
 
-<button type="submit">Registrarse</button>
+</div>
+
+<div class="mb-3">
+
+<label>Email</label>
+
+<input type="email" name="email" class="form-control" required>
+
+</div>
+
+<div class="mb-3">
+
+<label>Contraseña</label>
+
+<input type="password" name="password" class="form-control" required>
+
+</div>
+
+<button class="btn btn-main w-100">
+Registrarse
+</button>
 
 </form>
 
-<a href="/login">Ir a Login</a>
+<div class="text-center mt-3">
+
+<a href="/login">Volver al login</a>
+
+</div>
+
+</div>
 
 </div>
 

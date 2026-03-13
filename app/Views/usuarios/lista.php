@@ -1,85 +1,92 @@
-<h2>Usuarios disponibles</h2>
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Usuarios</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <style>
 
 body{
-font-family:Arial;
-background:#f4f6f9;
+background:#f5f5f5;
 }
 
-.container{
-width:400px;
-margin:auto;
-background:white;
-padding:20px;
-border-radius:10px;
-box-shadow:0 0 10px rgba(0,0,0,0.1);
+.navbar{
+background:#111;
 }
 
-.usuario{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:10px;
-border-bottom:1px solid #eee;
+.navbar-brand{
+color:white;
 }
 
-button{
-background:#2196F3;
+.btn-main{
+background:#ff8c42;
 color:white;
 border:none;
-padding:6px 12px;
-border-radius:5px;
-cursor:pointer;
-}
-
-button:hover{
-background:#1976D2;
-}
-
-.top{
-display:flex;
-justify-content:space-between;
-margin-bottom:10px;
 }
 
 </style>
 
-<div class="container">
+</head>
 
-<div class="top">
-<p>Hola <b><?= session()->get('usuario_nombre') ?></b></p>
-<a href="/logout">Cerrar sesión</a>
-</div>
+<body>
 
-<hr>
+<nav class="navbar navbar-dark px-3">
 
-<a href="/ia">
-<button>Chat IA</button>
+<span class="navbar-brand">
+ChatTo
+</span>
+
+<a href="/logout" class="btn btn-sm btn-light">
+Salir
 </a>
 
-<br><br>
+</nav>
+
+<div class="container mt-4" style="max-width:600px">
+
+<p>
+Hola <strong><?= session()->get('usuario_nombre') ?></strong>
+</p>
+
+<a href="/ia" class="btn btn-main mb-3">
+Chat con IA
+</a>
+
+<div class="card shadow-sm">
+
+<ul class="list-group list-group-flush">
 
 <?php if(empty($usuarios)): ?>
 
-<p>No hay usuarios aún</p>
+<li class="list-group-item">
+No hay usuarios
+</li>
 
 <?php else: ?>
 
 <?php foreach($usuarios as $u): ?>
 
-<div class="usuario">
+<li class="list-group-item d-flex justify-content-between align-items-center">
 
-<span><?= esc($u['nombre']) ?></span>
+<?= esc($u['nombre']) ?>
 
-<a href="/chat/<?= $u['id'] ?>">
-<button>Chatear</button>
+<a href="/chat/<?= $u['id'] ?>" class="btn btn-dark btn-sm">
+Abrir chat
 </a>
 
-</div>
+</li>
 
 <?php endforeach; ?>
 
 <?php endif; ?>
 
+</ul>
+
 </div>
+
+</div>
+
+</body>
+</html>

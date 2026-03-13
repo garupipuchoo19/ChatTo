@@ -12,6 +12,7 @@ class IAController extends BaseController
 
     public function chat()
     {
+
         $mensaje = $this->request->getPost('mensaje');
 
         if (!$mensaje) {
@@ -20,9 +21,12 @@ class IAController extends BaseController
             ]);
         }
 
-        $apiKey = env('GEMINI_API_KEY');
+        // Obtener variables del .env
+        $apiKey = getenv('GEMINI_API_KEY');
+        $modelo = getenv('GEMINI_MODEL');
+        $baseUrl = getenv('GEMINI_URL');
 
-        $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=" . $apiKey;
+        $url = $baseUrl . "/" . $modelo . ":generateContent";
 
         $data = [
             "contents" => [
@@ -40,12 +44,23 @@ class IAController extends BaseController
 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POST, true);
+
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            "Content-Type: application/json"
+            "Content-Type: application/json",
+            "x-goog-api-key: " . $apiKey
         ]);
+
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
 
         $response = curl_exec($ch);
+
+        if(curl_errno($ch)){
+            curl_close($ch);
+
+            return $this->response->setJSON([
+                "respuesta" => "Error de conexión con la IA"
+            ]);
+        }
 
         curl_close($ch);
 
@@ -54,13 +69,18 @@ class IAController extends BaseController
         $respuesta = "No hubo respuesta";
 
         if (isset($resultado['candidates'][0]['content']['parts'][0]['text'])) {
+
             $respuesta = $resultado['candidates'][0]['content']['parts'][0]['text'];
+
         } elseif (isset($resultado['error']['message'])) {
+
             $respuesta = $resultado['error']['message'];
+
         }
 
         return $this->response->setJSON([
             "respuesta" => $respuesta
         ]);
+
     }
 }

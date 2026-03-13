@@ -3,89 +3,92 @@
 <head>
 <title>Login</title>
 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
 <style>
 
 body{
-    font-family: Arial;
-    background:#f4f6f9;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
+background:#f5f5f5;
+font-family:Segoe UI;
 }
 
 .card{
-    background:white;
-    padding:30px;
-    width:300px;
-    border-radius:10px;
-    box-shadow:0 0 10px rgba(0,0,0,0.1);
+border:none;
+border-radius:12px;
 }
 
-h2{
-    text-align:center;
+.btn-main{
+background:#ff8c42;
+color:white;
+border:none;
 }
 
-input{
-    width:100%;
-    padding:10px;
-    margin:8px 0;
-    border:1px solid #ccc;
-    border-radius:5px;
+.btn-main:hover{
+background:#e6762f;
 }
 
-button{
-    width:100%;
-    padding:10px;
-    background:#4CAF50;
-    color:white;
-    border:none;
-    border-radius:5px;
-    cursor:pointer;
-}
-
-button:hover{
-    background:#45a049;
-}
-
-a{
-    display:block;
-    text-align:center;
-    margin-top:10px;
-}
-
-.error{
-    color:red;
-    text-align:center;
+.title{
+color:#111;
+font-weight:600;
 }
 
 </style>
 
 </head>
+
 <body>
 
-<div class="card">
+<div class="container vh-100 d-flex align-items-center justify-content-center">
 
-<h2>Login</h2>
+<div class="card shadow-lg p-4" style="width:420px">
+
+<h3 class="text-center title mb-4">
+Acceso al sistema
+</h3>
 
 <?php if(session()->getFlashdata('error')): ?>
-<p class="error">
+
+<div class="alert alert-danger">
 <?= session()->getFlashdata('error') ?>
-</p>
+</div>
+
 <?php endif; ?>
 
 <form method="post" action="/validar-login">
 
-<input type="email" name="email" placeholder="Email" required>
+<div class="mb-3">
 
-<input type="password" name="password" placeholder="Password" required>
+<label class="form-label">Correo</label>
 
-<button type="submit">Ingresar</button>
+<input type="email" name="email" class="form-control" required>
+
+</div>
+
+<div class="mb-3">
+
+<label class="form-label">Contraseña</label>
+
+<input type="password" name="password" class="form-control" required>
+
+</div>
+
+<button class="btn btn-main w-100">
+Entrar
+</button>
 
 </form>
 
+<div class="text-center mt-3">
+
 <a href="/registro">Crear cuenta</a>
-<a href="/forgot">¿Olvidaste tu contraseña?</a>
+
+<br>
+
+<a href="/forgot">Recuperar contraseña</a>
+
+</div>
+
+</div>
 
 </div>
 

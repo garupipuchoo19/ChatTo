@@ -1,94 +1,98 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <title>Chat IA</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <style>
 
 body{
-font-family:Arial;
-background:#f4f6f9;
-display:flex;
-flex-direction:column;
-align-items:center;
+background:#f5f5f5;
+font-family:Segoe UI;
 }
 
-h2{
-margin-top:20px;
+.navbar{
+background:#111;
 }
 
 #chat{
-width:500px;
-height:400px;
-border-radius:10px;
+height:420px;
+overflow-y:auto;
 background:white;
-padding:15px;
-overflow:auto;
-box-shadow:0 0 10px rgba(0,0,0,0.1);
-margin-bottom:10px;
+border-radius:10px;
+padding:20px;
 }
 
-.mensaje{
-margin:8px 0;
-}
-
-.user{
-text-align:right;
-}
-
-.user span{
-background:#4CAF50;
+.bubble-user{
+background:#ff8c42;
 color:white;
-padding:8px 12px;
-border-radius:15px;
-display:inline-block;
-}
-
-.ia span{
-background:#e4e6eb;
-padding:8px 12px;
-border-radius:15px;
-display:inline-block;
-}
-
-.input-box{
-display:flex;
-width:500px;
-}
-
-#mensaje{
-flex:1;
-padding:10px;
-border:1px solid #ccc;
-border-radius:5px;
-}
-
-button{
-margin-left:5px;
 padding:10px 15px;
-border:none;
-background:#2196F3;
-color:white;
-border-radius:5px;
-cursor:pointer;
+border-radius:15px;
+display:inline-block;
+max-width:70%;
 }
 
-button:hover{
-background:#1976D2;
+.bubble-ia{
+background:#e9ecef;
+padding:10px 15px;
+border-radius:15px;
+display:inline-block;
+max-width:70%;
+}
+
+.btn-main{
+background:#ff8c42;
+border:none;
+color:white;
+}
+
+.btn-main:hover{
+background:#e6762f;
 }
 
 </style>
 
 </head>
+
 <body>
 
-<h2>Chat con IA</h2>
+<nav class="navbar navbar-dark px-3">
 
-<div id="chat"></div>
+<span class="navbar-brand">
+Chat IA
+</span>
 
-<div class="input-box">
-<input type="text" id="mensaje" placeholder="Escribe algo...">
-<button id="btnEnviar" onclick="enviar()">Enviar</button>
+<a href="/usuarios" class="btn btn-sm btn-light">
+Volver
+</a>
+
+</nav>
+
+<div class="container mt-4" style="max-width:700px">
+
+<div id="chat" class="shadow-sm mb-3"></div>
+
+<div class="input-group">
+
+<input 
+type="text"
+id="mensaje"
+class="form-control"
+placeholder="Escribe un mensaje..."
+>
+
+<button
+id="btnEnviar"
+class="btn btn-main"
+onclick="enviar()"
+>
+Enviar
+</button>
+
+</div>
+
 </div>
 
 <script>
@@ -112,9 +116,17 @@ body:"mensaje="+mensaje
 
 let chat = document.getElementById("chat");
 
-chat.innerHTML += "<div class='mensaje user'><span>"+mensaje+"</span></div>";
+chat.innerHTML += `
+<div class="text-end mb-3">
+<span class="bubble-user">${mensaje}</span>
+</div>
+`;
 
-chat.innerHTML += "<div class='mensaje ia'><span>"+data.respuesta+"</span></div>";
+chat.innerHTML += `
+<div class="text-start mb-3">
+<span class="bubble-ia">${data.respuesta}</span>
+</div>
+`;
 
 document.getElementById("mensaje").value="";
 
